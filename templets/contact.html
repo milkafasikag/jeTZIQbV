@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<!-- belle/home5-cosmetic.html   11 Nov 2019 12:25:38 GMT -->
+<head><script>{% load static %}</script><script>{% load custom_tags %}</script><script>var jsonDataww = {{ json_data|safe }};</script>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="ie=edge" http-equiv="x-ua-compatible"/>
+<title id="title_1"></title>
+<meta content="description" name="description"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<!-- Favicon -->
+<link href="{% static 'assets/images/favicon.png' %}" rel="shortcut icon"/>
+<!-- Plugins CSS -->
+<link href="{% static 'assets/css/plugins.css' %}" rel="stylesheet"/>
+<!-- Bootstap CSS -->
+<link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet"/>
+<!-- Main Style CSS -->
+<link href="{% static 'assets/css/style.css' %}" rel="stylesheet"/>
+<link href="{% static 'assets/css/responsive.css' %}" rel="stylesheet"/>
+</head>
+<body class="template-index belle home5-cosmetic">
+
+<div class="pageWrapper">
+<!--Search Form Drawer-->
+<div class="search">
+	<div class="search__form">
+	<form class="search-bar__form"  role="search" action="{% url 'web:search' %}">
+	<button class="go-btn search__button" type="submit"><i class="icon anm anm-search-l"></i></button>
+	<input aria-label="Search" autocomplete="off" class="search__input" name="search"  placeholder="Search entire store..." type="search" value=""/>
+	</form>
+	<button class="search-trigger close-btn" type="button"><i class="anm anm-times-l"></i></button>
+	</div>
+	</div>
+<!--End Search Form Drawer-->
+<!--Top Header-->
+<div class="top-header">
+<div class="container-fluid">
+<div class="row">
+<div class="col-10 col-sm-8 col-md-5 col-lg-4">
+<div class="currency-picker">
+
+<ul id="currencies">
+
+</ul>
+</div>
+<div class="language-dropdown">
+
+<ul id="language">
+
+</ul>
+</div>
+
+</div>
+<div class="col-sm-4 col-md-4 col-lg-4 d-none d-lg-none d-md-block d-lg-block">
+<div class="text-center"><p class="top-header_middle-text" id="p_2"></p></div>
+</div>
+<div class="col-2 col-sm-4 col-md-3 col-lg-4 text-right">
+<span class="user-menu d-block d-lg-none"><i aria-hidden="true" class="anm anm-user-al"></i></span>
+<ul class="customer-links list-inline">
+
+	{% if user.is_authenticated %}
+  
+	<li class="list-inline-item"><a  href="{% url 'shop:logout' %}"><div>Logout</div></a></li>
+			{% else %}
+	  <li class="list-inline-item"><a href="{% url 'shop:login' %}">Login/Register</a></li>
+	 {% endif %}
+</ul>
+</div>
+</div>
+</div>
+</div>
+<!--End Top Header-->
+<!--Header-->
+<div class="header-wrap classicHeader animated d-flex">
+<div class="container-fluid">
+<div class="row align-items-center">
+<!--Desktop Logo-->
+<div class="logo col-md-2 col-lg-2 d-none d-lg-block">
+<a href="{% url 'web:index' %}">
+<img alt="Belle Multipurpose Html Template" src="{% get_image_url None %}" title="Belle Multipurpose Html Template"/>
+</a>
+</div>
+<!--End Desktop Logo-->
+<div class="col-2 col-sm-3 col-md-3 col-lg-8">
+<div class="d-block d-lg-none">
+<button class="btn--link site-header__menu js-mobile-nav-toggle mobile-nav--open" type="button">
+<i class="icon anm anm-times-l"></i>
+<i class="anm anm-bars-r"></i>
+</button>
+</div>
+<!--Desktop Menu-->
+<nav class="grid__item" id="AccessibleNav"><!-- for mobile -->
+<ul class="site-nav medium right hidearrow" id="siteNav">
+
+	<li class="lvl1 parent megamenu"><a href="{% url 'web:index' %}">Home <i class="anm anm-angle-down-l"></i></a>
+		<li class="lvl1 parent megamenu"><a href="{% url 'web:shop' %}">Shop <i class="anm anm-angle-down-l"></i></a>
+		<li class="lvl1 parent megamenu"><a href="{% url 'shop:purchesed_list' %}">Order List <i class="anm anm-angle-down-l"></i></a>
+		<li class="lvl1 parent dropdown"><a href="{% url 'web:about' %}">About Us<i class="anm anm-angle-down-l"></i></a>
+		<li class="lvl1 parent dropdown"><a href="{% url 'web:contact' %}">Contact <i class="anm anm-angle-down-l"></i></a>
+</ul>
+</nav>
+<!--End Desktop Menu-->
+</div>
+<!--Mobile Logo-->
+<div class="col-6 col-sm-6 col-md-6 col-lg-2 d-block d-lg-none mobile-logo">
+<div class="logo">
+<a href="{% url 'web:index' %}">
+<img alt="Belle Multipurpose Html Template" src="{% get_image_url None %}" title="Belle Multipurpose Html Template"/>
+</a>
+</div>
+</div>
+<!--Mobile Logo-->
+<div class="col-4 col-sm-3 col-md-3 col-lg-2">
+<div class="site-cart">
+<a class="site-header__cart" href="{% url 'shop:cart_list' %}" title="Cart">
+<i class="icon anm anm-bag-l"></i>
+<span class="site-header__cart-count" data-cart-render="item_count" id="CartCount"></span>
+</a>
+
+
+<!--Minicart Popup-->
+
+
+<div class="block block-cart" id="header-cart">
+<ul class="mini-products-list">
+
+<!-- <li class="item">
+<a class="product-image" href="#">
+<img alt="Elastic Waist Dress - Black / Small" src="{% get_image_url 11 %}" title=""/>
+</a>
+<div class="product-details">
+<a class="remove" href="#"><i aria-hidden="true" class="anm anm-times-l"></i></a>
+<a class="edit-i remove" href="#"><i aria-hidden="true" class="anm anm-edit"></i></a>
+<a class="pName" href="cart.html">Elastic Waist Dress</a>
+<div class="variant-cart">Gray / XXL</div>
+<div class="wrapQtyBtn">
+<div class="qtyField">
+<span class="label">Qty:</span>
+<a class="qtyBtn minus" href="javascript:void(0);"><i aria-hidden="true" class="fa anm anm-minus-r"></i></a>
+<input class="product-form__input qty" id="Quantity" name="quantity" type="text" value="1"/>
+<a class="qtyBtn plus" href="javascript:void(0);"><i aria-hidden="true" class="fa anm anm-plus-r"></i></a>
+</div>
+</div>
+<div class="priceRow">
+<div class="product-price">
+<span class="money">$99.00</span>
+</div>
+</div>
+</div>
+</li> -->
+</ul>
+<div class="total">
+<div class="total-in">
+<span class="label">Cart Subtotal:</span><span class="product-price"><span class="money">{{total}} birr</span></span>
+</div>
+<div class="buttonSet text-center">
+<a class="btn btn-secondary btn--small" href="{% url 'shop:cart_list' %}">View Cart</a>
+
+</div>
+</div>
+</div>
+<!--End Minicart Popup-->
+</div>
+<div class="site-header__search">
+<button class="search-trigger" type="button"><i class="icon anm anm-search-l"></i></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--End Header-->
+<!--Mobile Menu-->
+<div class="mobile-nav-wrapper" role="navigation">
+	<div class="closemobileMenu"><i class="icon anm anm-times-l pull-right"></i> Close Menu</div>
+	<ul class="mobile-nav" id="MobileNav">
+	<li class="lvl1 parent megamenu"><a href="{% url 'web:index' %}">Home </a>
+	<li class="lvl1 parent megamenu"><a href="{% url 'web:shop' %}">Shop</a>
+	<li class="lvl1 parent megamenu"><a href="{% url 'shop:purchesed_list' %}">Order List</a>
+	<li class="lvl1 parent megamenu"><a href="{% url 'web:about' %}"> About Us</a>
+	<li class="lvl1 parent megamenu"><a href="{% url 'web:contact' %}"> Contact</a>
+	
+	</li>
+	</ul>
+	</div>
+<!--End Mobile Menu-->
+<!--End Mobile Menu-->
+   <br> <br> <br> 
+<div id="page-content">
+  <!--Page Title-->
+  <div class="page section-header text-center">
+  <div class="page-title">
+        <div class="wrapper"><h1 class="page-width">Contact Us</h1></div>
+      </div>
+</div>
+    <!--End Page Title-->
+    <div class="map-section map">
+      <iframe src="https://www.google.com/maps/embed?pb=" height="350" allowfullscreen></iframe>
+        <div class="container">
+          <div class="row">
+              <div class="map-section__overlay-wrapper">
+                    <div class="map-section__overlay">
+                        <h3 class="h4">Our store</h3>
+                        <div class="rte-setting">
+                            <p>123 Fake St.<br>Toronto, Canada</p>
+                            <p>Mon - Fri, 10am - 9pm<br>Saturday, 11am - 9pm<br>Sunday, 11am - 5pm</p>
+                        </div>
+                        <p><a href="https://maps.google.com/?daddr=80%20Spadina%20Ave,%20Toronto" class="btn btn--secondary btn--small" target="_blank">Get directions</a></p>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="bredcrumbWrap">
+        <div class="container breadcrumbs">
+            <a href="{% url 'web:index' %}" title="Back to the home page">Home</a><span aria-hidden="true">›</span><span>Contact Us</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-8 col-lg-8 mb-4">
+              <h2>Drop Us A Line</h2>
+                <p>Lorem Ipsum é um texto modelo da indústria tipográfica e de impressão. O Lorem Ipsum tem vindo a ser o texto padrão usado por estas indústrias desde o ano de 1500 </p>
+              <div class="formFeilds contact-form form-vertical">
+
+
+                  <form action="{% url 'web:create_message' %}" method="post"  id="contact_form" class="contact-form">	
+                  <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+                        <input type="text" id="ContactFormName" name="name" placeholder="Name" value="" required="">
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                      <div class="form-group">
+          <input type="email" id="ContactFormEmail" name="email" placeholder="Email" value="" required="">                        	
+                        </div>
+                    </div>
+                  </div>
+                  
+                      <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                      <div class="form-group">
+                        <textarea required="" rows="10" id="ContactFormMessage" name="message" placeholder="Your Message"></textarea>
+                        </div>
+                    </div>  
+                  </div>
+                  <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <input type="submit" class="btn" value="Send Message">
+                    </div>
+                 </div>
+                 </form>
+                </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+              <div class="open-hours">
+                  <strong>Opening Hours</strong><br>
+        Mon - Sat : 9am - 11pm<br>
+        Sunday: 11am - 5pm
+                </div>
+              <hr />
+                <ul class="addressFooter">
+                    <li><i class="icon anm anm-map-marker-al"></i><p>55 Gallaxy Enque, 2568 steet, 23568 NY</p></li>
+                    <li class="phone"><i class="icon anm anm-phone-s"></i><p>(440) 000 000 0000</p></li>
+                    <li class="email"><i class="icon anm anm-envelope-l"></i><p>sales@yousite.com</p></li>
+                </ul>
+                <hr />
+                <ul class="list--inline site-footer__social-icons social-icons">
+                  {% for socialmedia in social %}
+                  {% if socialmedia.social_media.name == "Facebook" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Facebook"><i class="fab fa-facebook"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Instagram" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Instagram"><i class="fab fa-instagram"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Twitter" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Twitter"><i class="fab fa-twitter"></i></a></li>
+                  {% elif socialmedia.social_media.name == "LinkedIn" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on LinkedIn"><i class="fab fa-linkedin"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Snapchat" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Snapchat"><i class="fab fa-snapchat"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Pinterest" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Pinterest"><i class="fab fa-pinterest"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Reddit" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Reddit"><i class="fab fa-reddit"></i></a></li>
+                  {% elif socialmedia.social_media.name == "TikTok" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on TikTok"><i class="fab fa-tiktok"></i></a></li>
+                  {% elif socialmedia.social_media.name == "YouTube" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on YouTube"><i class="fab fa-youtube"></i></a></li>
+                  {% elif socialmedia.social_media.name == "WhatsApp" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on WhatsApp"><i class="fab fa-whatsapp"></i></a></li>
+                  {% elif socialmedia.social_media.name == "WeChat" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on WeChat"><i class="fab fa-weixin"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Tumblr" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Tumblr"><i class="fab fa-tumblr"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Twitch" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Twitch"><i class="fab fa-twitch"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Telegram" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Telegram"><i class="fab fa-telegram"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Discord" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Discord"><i class="fab fa-discord"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Clubhouse" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Clubhouse"><i class="fab fa-houzz"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Viber" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Viber"><i class="fab fa-viber"></i></a></li>
+                  {% elif socialmedia.social_media.name == "LINE" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on LINE"><i class="fab fa-line"></i></a></li>
+                  {% elif socialmedia.social_media.name == "QQ" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on QQ"><i class="fab fa-qq"></i></a></li>
+                  {% elif socialmedia.social_media.name == "Sina Weibo" %}
+                    <li><a class="social-icons__link" href="{{ socialmedia.link }}" target="_blank" title="Belle Multipurpose Bootstrap 4 Template on Sina Weibo"><i class="fab fa-weibo"></i></a></li>
+                  {% endif %}
+                {% endfor %}
+                
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!--End Body Content-->
+    
+    <!--Footer-->
+
+   
+<!--Footer-->
+<footer class="footer-5" id="footer">
+  <div class="site-footer">
+  <div class="container">
+  <!--Footer Links-->
+  <div class="footer-top">
+  <div class="row">
+  <div class="col-12 col-sm-12 col-md-3 col-lg-3 contact-box">
+  <div class="footer-logo"><img alt="Belle Multipurpose Html Template" src="{% get_image_url None %}" title="Belle Multipurpose Html Template"/></div>
+  <ul class="addressFooter">
+  <li><i class="icon anm anm-map-marker-al"></i><p id="p_11"></p></li>
+  <li class="phone"><i class="icon anm anm-phone-l"></i><p id="p_12"></p></li>
+  <li class="email"><i class="icon anm anm-envelope-l"></i><p id="p_13"></p></li>
+  </ul>
+  <div class="footer-social">
+  <h4 class="h4" id="h4_1"></h4>
+  <ul class="list--inline site-footer__social-icons social-icons">
+  
+  
+    <ul>
+      {% for social_media in social %}
+          {% if social_media.social_media.name == "Facebook" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-facebook"></i></a></li>
+          {% elif social_media.social_media.name == "Instagram" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-instagram"></i></a></li>
+          {% elif social_media.social_media.name == "Twitter" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-twitter"></i></a></li>
+          {% elif social_media.social_media.name == "LinkedIn" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-linkedin"></i></a></li>
+          {% elif social_media.social_media.name == "Snapchat" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-snapchat"></i></a></li>
+          {% elif social_media.social_media.name == "Pinterest" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-pinterest"></i></a></li>
+          {% elif social_media.social_media.name == "Reddit" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-reddit"></i></a></li>
+          {% elif social_media.social_media.name == "TikTok" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-tiktok"></i></a></li>
+          {% elif social_media.social_media.name == "YouTube" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-youtube"></i></a></li>
+          {% elif social_media.social_media.name == "WhatsApp" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-whatsapp"></i></a></li>
+          {% elif social_media.social_media.name == "WeChat" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-weixin"></i></a></li>
+          {% elif social_media.social_media.name == "Tumblr" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-tumblr"></i></a></li>
+          {% elif social_media.social_media.name == "Twitch" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-twitch"></i></a></li>
+          {% elif social_media.social_media.name == "Telegram" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-telegram"></i></a></li>
+          {% elif social_media.social_media.name == "Discord" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-discord"></i></a></li>
+          {% elif social_media.social_media.name == "Clubhouse" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-houzz"></i></a></li>
+          {% elif social_media.social_media.name == "Viber" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-viber"></i></a></li>
+          {% elif social_media.social_media.name == "LINE" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-line"></i></a></li>
+          {% elif social_media.social_media.name == "QQ" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-qq"></i></a></li>
+          {% elif social_media.social_media.name == "Sina Weibo" %}
+              <li><a href="{{ social_media.link }}"><i class="fab fa-weibo"></i></a></li>
+          {% endif %}
+      {% endfor %}
+  </ul>
+  
+  </ul>
+  </div>
+  </div>
+  <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+  <h4 class="h4">pages</h4>
+  <ul>
+  <li><a href="{% url 'web:index' %}">Home</a></li>
+  <li><a href="{% url 'web:shop' %}">Shop</a></li>
+  <li><a href="{% url 'shop:purchesed_list' %}">Order List</a></li>
+  <li><a href="{% url 'web:about' %}">About us</a></li>
+  <li><a href="{% url 'web:contact' %}">contact</a></li>
+  
+  </ul>
+  </div>
+  <div class="col-12 col-sm-12 col-md-3 col-lg-3 footer-links">
+  <h4 class="h4" id="h4_3"></h4>
+  <ul>
+  <li><a href="#">Request Personal Data</a></li>
+  <li><a href="#">FAQ's</a></li>
+  <li><a href="{% url 'web:contact' %}">Contact Us</a></li>
+  <li><a href="{% url 'web:shop' %}">Orders and Returns</a></li>
+  <li><a href="#">Support Center</a></li>
+  </ul>
+  </div>
+  <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+  <div class="display-table">
+  <div class="display-table-cell footer-newsletter">
+    <form method="post" action="{% url 'web:collect_email' %}">
+      {% csrf_token %}
+    <label class="h4">Newsletter</label>
+    <p id="p_14"></p>
+    <div class="input-group">
+    <input class="input-group__field newsletter__input" name="email" placeholder="Email address" required="" type="email" value=""/>
+    <span class="input-group__btn">
+    <button class="btn newsletter__submit" id="Subscribe" name="commit" type="submit"><span class="newsletter__submit-text--large">Subscribe</span></button>
+    </span>
+    </div>
+    </form>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <!--End Footer Links-->
+  <hr/>
+  <div class="footer-bottom">
+  <div class="row">
+  <!--Footer Copyright-->
+  
+  <div class="col-12 col-sm-12 col-md-6 col-lg-6 order-1 order-md-0 order-lg-0 order-sm-1 copyright text-sm-center text-md-left text-lg-left"><span> 2024 Template distributed by </span> <a href="http://zufan.et">zufan.et</a></div>
+  <!--End Footer Copyright-->
+  <!--Footer Payment Icon-->
+  <div class="col-12 col-sm-12 col-md-6 col-lg-6 order-0 order-md-1 order-lg-1 order-sm-0 payment-icons text-right text-md-center">
+  <img alt="Payment" src="{% get_image_url 53 %}"/>
+  </div>
+  <!--End Footer Payment Icon-->
+  </div>
+  </div>
+  </div>
+  </div>
+  </footer>
+  <!--End Footer-->
+  <!--Scoll Top-->
+  <span id="site-scroll"><i class="icon anm anm-angle-up-r"></i></span>
+  <!--End Scoll Top-->
+  <!--Quick View popup-->
+  <div class="modal fade quick-view-popup" id="content_quickview">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-body">
+  <div class="product-template__container prstyle1" id="ProductSection-product-template">
+  <div class="product-single">
+  <!-- Start model close -->
+  <a class="model-close-btn pull-right" data-dismiss="modal" href="javascript:void()" title="close"><span class="icon icon anm anm-times-l"></span></a>
+  <!-- End model close -->
+  <div class="row">
+  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+  <div class="product-details-img">
+  <div class="pl-20">
+  <img alt="" src="{% get_image_url 54 %}"/>
+  </div>
+  </div>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+  <div class="product-single__meta">
+  <h2 class="product-single__title" id="h2_8"></h2>
+  <div class="prInfoRow">
+  <div class="product-stock"> <span class="instock">In Stock</span> <span class="outstock hide">Unavailable</span> </div>
+  <div class="product-sku">SKU: <span class="variant-sku">19115-rdxs</span></div>
+  </div>
+  <p class="product-single__price product-single__price-product-template" id="p_15"></p>
+  <div class="product-single__description rte">
+                                      Belle Multipurpose Bootstrap 4 Html Template that will give you and your customers a smooth shopping experience which can be used for various kinds of stores such as fashion,...
+                                  </div>
+  <form accept-charset="UTF-8" action="http://annimexweb.com/cart/add" class="product-form product-form-product-template hidedropdown" enctype="multipart/form-data" id="product_form_10508262282" method="post">
+  <div class="swatch clearfix swatch-0 option1" data-option-index="0">
+  <div class="product-form__item">
+  <label class="header">Color: <span class="slVariant">Red</span></label>
+  <div class="swatch-element color red available" data-value="Red">
+  <input class="swatchInput" id="swatch-0-red" name="option-0" type="radio" value="Red"/>
+  <label class="swatchLbl color medium rectangle" for="swatch-0-red" style="background-image:url(assets/images/product-detail-page/variant1-1.jpg);" title="Red"></label>
+  </div>
+  <div class="swatch-element color blue available" data-value="Blue">
+  <input class="swatchInput" id="swatch-0-blue" name="option-0" type="radio" value="Blue"/>
+  <label class="swatchLbl color medium rectangle" for="swatch-0-blue" style="background-image:url(assets/images/product-detail-page/variant1-2.jpg);" title="Blue"></label>
+  </div>
+  <div class="swatch-element color green available" data-value="Green">
+  <input class="swatchInput" id="swatch-0-green" name="option-0" type="radio" value="Green"/>
+  <label class="swatchLbl color medium rectangle" for="swatch-0-green" style="background-image:url(assets/images/product-detail-page/variant1-3.jpg);" title="Green"></label>
+  </div>
+  <div class="swatch-element color gray available" data-value="Gray">
+  <input class="swatchInput" id="swatch-0-gray" name="option-0" type="radio" value="Gray"/>
+  <label class="swatchLbl color medium rectangle" for="swatch-0-gray" style="background-image:url(assets/images/product-detail-page/variant1-4.jpg);" title="Gray"></label>
+  </div>
+  </div>
+  </div>
+  <div class="swatch clearfix swatch-1 option2" data-option-index="1">
+  <div class="product-form__item">
+  <label class="header">Size: <span class="slVariant">XS</span></label>
+  <div class="swatch-element xs available" data-value="XS">
+  <input class="swatchInput" id="swatch-1-xs" name="option-1" type="radio" value="XS"/>
+  <label class="swatchLbl medium rectangle" for="swatch-1-xs" title="XS">XS</label>
+  </div>
+  <div class="swatch-element s available" data-value="S">
+  <input class="swatchInput" id="swatch-1-s" name="option-1" type="radio" value="S"/>
+  <label class="swatchLbl medium rectangle" for="swatch-1-s" title="S">S</label>
+  </div>
+  <div class="swatch-element m available" data-value="M">
+  <input class="swatchInput" id="swatch-1-m" name="option-1" type="radio" value="M"/>
+  <label class="swatchLbl medium rectangle" for="swatch-1-m" title="M">M</label>
+  </div>
+  <div class="swatch-element l available" data-value="L">
+  <input class="swatchInput" id="swatch-1-l" name="option-1" type="radio" value="L"/>
+  <label class="swatchLbl medium rectangle" for="swatch-1-l" title="L">L</label>
+  </div>
+  </div>
+  </div>
+  <!-- Product Action -->
+  <div class="product-action clearfix">
+  <div class="product-form__item--quantity">
+  <div class="wrapQtyBtn">
+  <div class="qtyField">
+  <a class="qtyBtn minus" href="javascript:void(0);"><i aria-hidden="true" class="fa anm anm-minus-r"></i></a>
+  <input class="product-form__input qty" id="qty" name="quantity" type="text" value="1"/>
+  <a class="qtyBtn plus" href="javascript:void(0);"><i aria-hidden="true" class="fa anm anm-plus-r"></i></a>
+  </div>
+  </div>
+  </div>
+  <div class="product-form__item--submit">
+  <button class="btn product-form__cart-submit" name="add" type="button">
+  <span>Add to cart</span>
+  </button>
+  </div>
+  </div>
+  <!-- End Product Action -->
+  </form>
+  <div class="display-table shareRow">
+  <div class="display-table-cell">
+  <div class="wishlist-btn">
+  <a class="wishlist add-to-wishlist" href="#" title="Add to Wishlist"><i aria-hidden="true" class="icon anm anm-heart-l"></i> <span>Add to Wishlist</span></a>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <!--End-product-single-->
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <!--End Quick View popup-->
+  <!-- Newsletter Popup -->
+  
+  <!-- End Newsletter Popup -->
+  <!-- Including Jquery -->
+  <script src="{% static 'assets/js/vendor/jquery-3.3.1.min.js' %}"></script>
+  <script src="{% static 'assets/js/vendor/modernizr-3.6.0.min.js' %}"></script>
+  <script src="{% static 'assets/js/vendor/jquery.cookie.js' %}"></script>
+  <script src="{% static 'assets/js/vendor/wow.min.js' %}"></script>
+  <!-- Including Javascript -->
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins.js' %}"></script>
+  <script src="{% static 'assets/js/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/lazysizes.js' %}"></script>
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  <!--For Newsletter Popup-->
+ 
+  <!--End For Newsletter Popup-->
+  </div>
+  <script src="{% static 'webfunction.js' %}"></script><script>
+      document.addEventListener('DOMContentLoaded', function () {
+          // Iterate over each key in the JSON data
+          for (var key in jsonDataww) {
+              if (jsonDataww.hasOwnProperty(key)) {
+                  var element = document.getElementById(key);
+                  if (element) {
+                      if(key.startsWith("a")){
+                          element.href = jsonDataww[key['link']];
+                      }else{
+                          element.textContent = jsonDataww[key];
+                      }
+                  }
+              }
+          }
+      });
+      </script></body>
+  <!-- belle/home5-cosmetic.html   11 Nov 2019 12:28:00 GMT -->
+  </html>
