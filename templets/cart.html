@@ -182,10 +182,12 @@
 	</li>
 	</ul>
 	</div>
+
 <!--End Mobile Menu-->
     <br> <br> <br> <br>
-    <!--Body Content-->
-    <div id="page-content">
+
+     <!--Body Content-->
+     <div id="page-content">
     	<!--Page Title-->
     	<div class="page section-header text-center">
 			<div class="page-title">
@@ -193,153 +195,116 @@
       		</div>
 		</div>
         <!--End Page Title-->
-        
-        <div class="container">
-        	<div class="row">
-                <div class="col-12 col-sm-12 col-md-8 col-lg-8 main-col">
-                	<form action="#" method="post" class="cart style2">
-                		<table>
-                            <thead class="cart__row cart__header">
-                                <tr>
-                                    <th colspan="2" class="text-center">Product</th>
-                                    <th class="text-center">Price</th>
-                                    <th class="text-center">Quantity</th>
-                                    <th class="text-right">Total</th>
-                                    <th class="action">&nbsp;</th>
-                                </tr>
-                            </thead>
-                    		<tbody>
-                                {% for i in order %}
-                                <tr class="cart__row border-bottom line1 cart-flex border-top">
-                                    <td class="cart__image-wrapper cart-flex-item">
-                                        <a href="#"><img class="cart__image" src="{{i.0.item.images.all.0.image.url}}" alt="Elastic Waist Dress - Navy / Small"></a>
-                                    </td>
-                                    <td class="cart__meta small--text-left cart-flex-item">
-                                        <div class="list-view-item__title">
-                                            <a href="#">{{i.0.item.name}}</a>
-                                        </div>
-                                        
-                                        <div class="cart__meta-text">
-                                            Color: Navy<br>Size: Small<br>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price-wrapper cart-flex-item">
-                                        <span class="money">
+      
+<div class="container-fluid pt-5">
+	<div class="row px-xl-5">
+		<div class="col-lg-8 table-responsive mb-5">
+			<table class="table table-bordered text-center mb-0">
+				<thead>
+					<tr>
+						<th>Products</th>
+						<th>Price</th>
+						<th>Quantity</th>
+						<th>Total</th>
+						<th>Remove</th>
+					</tr>
+				</thead>
+				{% for i in order %}
+				<tbody class="align-middle">
+					<tr>
+						<td class="align-middle"><img src="{{i.0.item.images.all.0.image.url}}" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
+						<td class="align-middle">
+							{% if i.0.item.disc > 0 %}
+								{% with discounted_price=i.0.item.price|calculate_discounted_price:i.0.item.disc|floatformat:2 %}
+								<ins>{{ discounted_price }} birr</ins> <br><del>{{i.0.item.price}} </del> 
+								{% endwith %}
+							{% else %}
+								<span>{{i.0.item.price}} birr</span>
+							{% endif %}
+						  </td>
+						<td class="align-middle">
+							<form class="cart mb-0 d-flex justify-content-between align-items-center" method="post" enctype='multipart/form-data'>
+								{% csrf_token %} 
+								<input type="text" name="id" value="{{i.0.id}}" hidden>
 
-                                            {% if i.0.item.disc > 0 %}
-													{% with discounted_price=i.0.item.price|calculate_discounted_price:i.0.item.disc|floatformat:2 %}
-                                                    <ins>{{ discounted_price }} birr<br><del>{{i.0.item.price}} </del>
-													{% endwith %}
-												{% else %}
-													<span>{{i.0.item.price}} birr</span>
-												{% endif %}
-                                        </span>
-                                    </td>
-                                    <td class="cart__update-wrapper cart-flex-item text-right">
+			
+							<div class="d-flex align-items-center mb-4 pt-2">
+								
+								<div class="input-group quantity mr-3" style="width: 130px;">
+									<div class="input-group-btn">
+										
+									</div>
+									<input type="number" class="form-control bg-white text-center quantity-input" value="{{i.0.quntity}}" name="qunt">
+									<div class="input-group-btn">
+										
+									</div>
+								</div>
+								<button class="btn btn-primary px-3" type="submit" style="background-color: black;" >Change</button>
+							</div>
+							</form>
+						</td>
+						<td class="align-middle">
+							{% if i.0.item.disc > 0 %}
 
-                                        <div class="cart__qty text-center">
-                                            <form method="post">
-                                                {% csrf_token %} 
-                                            <div class="qtyField">
-                                                <a class="qtyBtn minus" href="javascript:void(0);"><i class="icon icon-minus"></i></a>
-                                                <input type="text" name="id" value="{{i.0.id}}" hidden>
-                                                <input class="cart__qty-input qty" type="text"  id="qty"  name="qunt" value="{{i.0.quntity}}" pattern="[0-9]*">
-                                                <a class="qtyBtn plus" href="javascript:void(0);"><i class="icon icon-plus"></i></a>
-                                            </div>
-                                            <br>
-                                            <button type="submit" class="btn btn--small-wide checkout">change</button>
+							{% with discounted_price=i.1|calculate_discounted_price:i.0.item.disc|floatformat:2 %}
+							<ins>{{ discounted_price }} birr</ins> <br><del>{{i.1}} </del> 
+								{% endwith %}
+							{% else %}
+								<span>{{i.1}} birr</span>
+							{% endif %}
+						</td>
+						<td class="cart-product-remove">
+							<a href="{% url 'shop:remove' id=i.0.id %}" class="btn btn-block btn-primary my-3 py-3" title="Remove this item"  style="background-color: black;">Remove</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="col-lg-4">
+			<form action="{% url 'shop:discount' %}" method="post">
+				<div class="input-group">
+					{% csrf_token %} 
 
-												
-                                        </div>
-                                    </td>
-                                    <td class="text-right small--hide cart-price">
-                                        <div><span class="money">
-                                            {% if i.0.item.disc > 0 %}
+					<input type="text" class="form-control p-4" placeholder="Coupon Code" name="code" >
+					
+					<div class="input-group-append">
+						<button class="btn btn-primary" style="background-color: rgb(12, 11, 11);">Apply Coupon</button>
+					</div>
+				</div>
+			</form> 
+			<br>
+	   <div class="card border-secondary mb-5">
+				<div class="card-header  border-0">
+					<h4 class="font-weight-semi-bold m-0">Cart Summary</h4>
+				</div>
+				<div class="card-body">
+					<div class="d-flex justify-content-between mb-3 pt-1">
+						<h6 class="font-weight-medium">Subtotal</h6>
+						<h6 class="font-weight-medium">{{total}} birr</h6>
+					</div>
+					<div class="d-flex justify-content-between">
+						<h6 class="font-weight-medium">Shipping</h6>
+						<h6 class="font-weight-medium">Free Delivery</h6>
+					</div>
+					<div class="d-flex justify-content-between">
+						<h6 class="font-weight-medium">Coupon Discount</h6>
+						<h6 class="font-weight-medium">-{{discunt}} birr</h6>
+					</div>
+				</div>
+				<div class="card-footer border-secondary bg-transparent">
+					<div class="d-flex justify-content-between mt-2">
+						<h5 class="font-weight-bold">Total</h5>
+						<h5 class="font-weight-bold">{{subtot}} birr</h5>
+					</div>
+					<a href="{% url 'shop:payment_display' ord.id %}" class="btn btn-block btn-primary my-3 py-3" style="background-color: black;">Proceed to Checkout</a>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-                                            {% with discounted_price=i.1|calculate_discounted_price:i.0.item.disc|floatformat:2 %}
-                                            <ins>{{ discounted_price }} birr<br><del>{{i.1}} </del>
-                                                {% endwith %}
-                                            {% else %}
-                                                <span>{{i.1}} birr</span>
-                                            {% endif %}
-
-                                        </span></div>
-                                    </td>
-                                    <td class="text-center small--hide"><a href="{% url 'shop:remove' id=i.0.id %}" class="btn btn--secondary cart__remove" title="Remove tem"><i class="icon icon anm anm-times-l"></i></a></td>
-                                </tr>
-                              </form>
-                                {% endfor %}
-                                </tbody>
-                    	    </table>
-<br>
-
-                            <div class="col-lg-auto ps-lg-0">
-                                <form action="{% url 'shop:discount' %}" method="post">
-
-                                <div class="row align-items-center">
-                                    <div class="col-md-8">
-                                        {% csrf_token %} 
-
-                                        <input type="text" name="code" class="form-control text-center text-md-start" placeholder="Enter Coupon Code..">
-                                    
-                                    </div>
-                                    <div class="col-md-4 mt-3 mt-md-0">
-                                        <button type="submit" class="btn btn--small-wide checkout" style="--cnvs-btn-padding-y:7px;line-height:22px;">Apply Coupon</button>
-                                    </div>
-                                </div>
-                            </form>
-                            </div>
-                    
-                   
-					<div id="shipping-calculator" class="mb-4">
-                    
-                        <div class="row">
-                        	
-                            
-                           
-                           
-                        </div>
-                    </div> 
-                    
-                    </form>                   
-               	</div>
-                <div class="col-12 col-sm-12 col-md-4 col-lg-4 cart__footer">
-                	<div class="cart-note">
-                    	<div class="solid-border">
-				
-							
-						</div>
-                    </div>
-                    <div class="solid-border">
-                      <div class="row">
-                      	<span class="col-12 col-sm-6 cart__subtotal-title"><strong>Subtotal</strong></span>
-                        <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">{{total}} birr</span></span>
-
-                        <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Coupon Discount</strong></span>
-                        <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">-{{discunt}} birr</span></span>
-                        <span class="col-12 col-sm-6 cart__subtotal-title"><strong>Total</strong></span>
-                        <span class="col-12 col-sm-6 cart__subtotal-title cart__subtotal text-right"><span class="money">{{subtot}} birr</span></span>
-
-                      </div>
-                      <div class="cart__shipping">Shipping &amp; discunt calculated at checkout</div>
-                      <p class="cart_tearm">
-                        <label>
-                          <input type="checkbox" name="tearm" id="cartTearm" class="checkbox" value="tearm" required="">
-                           I agree with the terms and conditions</label>
-                      </p>
-                      <!-- <input type="submit" name="checkout" id="cartCheckout" class="btn btn--small-wide checkout" value="Checkout" disabled="disabled">
-                      <div class="paymnet-img"><img src="assets/images/payment-img.jpg" alt="Payment"></div> -->
-                      <a href="{% url 'shop:payment_display' ord.id %}" class="btn btn--small-wide checkout">Proceed to Checkout</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        
-    </div>
-    <!--End Body Content-->
-    
-    <!--Footer-->
 
 <!--Footer-->
 
